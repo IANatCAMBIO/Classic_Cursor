@@ -1,19 +1,16 @@
 /*
- * retrocursor — apply a Mousecape .cape file to the macOS cursors, once, and exit.
+ * retrocursor — apply the cape embedded at build time (cursors.cape) to the
+ * macOS cursors, once, and exit.
  *
- * Usage: retrocursor [file.cape]
- * With no argument the compiled-in DEFAULT_CAPE path is used.
  * Cursors stay replaced until logout/reboot; there is no backup or restore.
  */
 #include <ApplicationServices/ApplicationServices.h>
 #include <ImageIO/ImageIO.h>
+#include <mach-o/getsect.h>
+#include <mach-o/ldsyms.h>
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
-
-#ifndef DEFAULT_CAPE
-#define DEFAULT_CAPE "/Users/ian_campbell/Downloads/local.mousecape.macos.15.basics.cape"
-#endif
 
 #define MAX_FRAMES 24
 #define MAX_SYSTEM_CURSORS 128
@@ -36,31 +33,22 @@ struct cursor_spec {
 };
 
 /*
- * read_file — load a whole file into a CFData.
- *
- * Inputs:
- *   path — file to read
+ * embedded_cape — locate the cape plist linked into this binary.
  *
  * Output:
- *   new CFData (caller releases), or NULL on error.
+ *   new CFData wrapping the embedded bytes (caller releases), or NULL if
+ *   the section is missing.
  */
 static CFDataRef
-read_file(const char *path)
+embedded_cape(void)
 {
-    FILE *fp = fopen(path, "rb");
-    if (fp == NULL) {
+    unsigned long size = 0;
+    uint8_t *bytes = getsectiondata(&_mh_execute_header, "__DATA", "cape", &size);
+
+    if (bytes == NULL) {
         return NULL;
     }
-
-    CFMutableDataRef data = CFDataCreateMutable(NULL, 0);
-    UInt8 buf[65536];
-    size_t n;
-    while ((n = fread(buf, 1, sizeof(buf), fp)) > 0) {
-        CFDataAppendBytes(data, buf, (CFIndex)n);
-    }
-
-    fclose(fp);
-    return data;
+    return CFDataCreateWithBytesNoCopy(NULL, bytes, (CFIndex)size, kCFAllocatorNull);
 }
 
 /*
@@ -264,18 +252,17 @@ apply_each(const void *key, const void *value, void *ctx)
 }
 
 /*
- * main — load the cape plist and apply every cursor in it.
+ * main — parse the embedded cape plist and apply every cursor in it.
  *
  * Output:
  *   0 if all cursors applied, 1 otherwise.
  */
 int
-main(int argc, char **argv)
+main(void)
 {
-    const char *path = argc > 1 ? argv[1] : DEFAULT_CAPE;
-    CFDataRef data = read_file(path);
+    CFDataRef data = embedded_cape();
     if (data == NULL) {
-        fprintf(stderr, "retrocursor: cannot read %s\n", path);
+        fprintf(stderr, "retrocursor: no embedded cape\n");
         return 1;
     }
 
@@ -288,7 +275,7 @@ main(int argc, char **argv)
         cursors = CFDictionaryGetValue(plist, CFSTR("Cursors"));
     }
     if (cursors == NULL || CFGetTypeID(cursors) != CFDictionaryGetTypeID()) {
-        fprintf(stderr, "retrocursor: %s is not a valid cape\n", path);
+        fprintf(stderr, "retrocursor: embedded cape is not valid\n");
         return 1;
     }
 
