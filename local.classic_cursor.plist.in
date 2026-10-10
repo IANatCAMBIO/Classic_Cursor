@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Label</key><string>local.retrocursor</string>
-    <key>ProgramArguments</key><array><string>@PREFIX@/bin/retrocursor</string></array>
+    <key>Label</key><string>local.classic_cursor</string>
+    <key>ProgramArguments</key><array><string>@PREFIX@/bin/classic_cursor</string></array>
     <key>RunAtLoad</key><true/>
 </dict>
 </plist>

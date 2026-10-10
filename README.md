@@ -1,4 +1,4 @@
-# RetroCursor
+# classic_cursor
 
 A tiny one-shot tool that replaces the macOS cursors with the ones in a
 [Mousecape](https://github.com/alexzielenski/Mousecape) `.cape` file, then exits.
@@ -15,9 +15,9 @@ again at each login (see below).
 Prerequisites: macOS with Xcode Command Line Tools (`xcode-select --install`).
 
 ```sh
-make              # build ./retrocursor (~130 KB, cape included)
+make              # build ./classic_cursor (~130 KB, cape included)
 make run          # build and apply the cape now
-sudo make install # copies to /usr/local/bin/retrocursor (PREFIX=... to change)
+sudo make install # copies to /usr/local/bin/classic_cursor (PREFIX=... to change)
 ```
 
 ## Run at login
@@ -28,8 +28,8 @@ make install-agent       # installs and loads a LaunchAgent (silent, runs at eve
 make uninstall-agent     # removes it
 ```
 
-`install-agent` writes `~/Library/LaunchAgents/local.retrocursor.plist` from
-`local.retrocursor.plist.in` and loads it with `launchctl`. It also appears in
+`install-agent` writes `~/Library/LaunchAgents/local.classic_cursor.plist` from
+`local.classic_cursor.plist.in` and loads it with `launchctl`. It also appears in
 System Settings → General → Login Items & Extensions → Allow in the Background.
 Run it without `sudo` so the agent lands in your own home folder (if `/usr/local/bin`
 needs root, run `sudo make install` first, then `make install-agent`).

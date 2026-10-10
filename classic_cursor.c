@@ -1,5 +1,5 @@
 /*
- * retrocursor — apply the cape embedded at build time (macos_15_cursors.cape) to the
+ * classic_cursor — apply the cape embedded at build time (macos_15_cursors.cape) to the
  * macOS cursors, once, and exit.
  *
  * Cursors stay replaced until logout/reboot; there is no backup or restore.
@@ -246,7 +246,7 @@ apply_each(const void *key, const void *value, void *ctx)
         CFGetTypeID(value) != CFDictionaryGetTypeID() ||
         !CFStringGetCString(key, name, sizeof(name), kCFStringEncodingUTF8) ||
         apply_cursor(name, value) != 0) {
-        fprintf(stderr, "retrocursor: failed to apply a cursor entry\n");
+        fprintf(stderr, "classic_cursor: failed to apply a cursor entry\n");
         state->failures++;
     }
 }
@@ -262,7 +262,7 @@ main(void)
 {
     CFDataRef data = embedded_cape();
     if (data == NULL) {
-        fprintf(stderr, "retrocursor: no embedded cape\n");
+        fprintf(stderr, "classic_cursor: no embedded cape\n");
         return 1;
     }
 
@@ -275,7 +275,7 @@ main(void)
         cursors = CFDictionaryGetValue(plist, CFSTR("Cursors"));
     }
     if (cursors == NULL || CFGetTypeID(cursors) != CFDictionaryGetTypeID()) {
-        fprintf(stderr, "retrocursor: embedded cape is not valid\n");
+        fprintf(stderr, "classic_cursor: embedded cape is not valid\n");
         return 1;
     }
 

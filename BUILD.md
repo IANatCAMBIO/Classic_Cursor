@@ -1,4 +1,4 @@
-# Building RetroCursor
+# Building classic_cursor
 
 - Toolchain: Apple clang from Xcode Command Line Tools (any recent version; C99).
 - `macos_15_cursors.cape` is embedded into the binary by the linker (`-sectcreate __DATA cape`);
@@ -10,4 +10,4 @@
 - Platform: macOS only. Uses undocumented CoreGraphics symbols
   (`CGSRegisterCursorWithImages`, `CGSCursorNameForSystemCursor`,
   `CGSSetDockCursorOverride`, `CGSMainConnectionID`) declared by hand in
-  `retrocursor.c`; they may change between macOS releases. Developed against macOS 26.
+  `classic_cursor.c`; they may change between macOS releases. Developed against macOS 26.
