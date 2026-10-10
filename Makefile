@@ -21,11 +21,11 @@ install: retrocursor
 install-agent:
 	mkdir -p $(dir $(AGENT))
 	sed 's|@PREFIX@|$(PREFIX)|' local.retrocursor.plist.in > $(AGENT)
-	-launchctl bootout $(DOMAIN) $(AGENT) 2>/dev/null
+	@launchctl print $(DOMAIN)/local.retrocursor >/dev/null 2>&1 && launchctl bootout $(DOMAIN) $(AGENT) || true
 	launchctl bootstrap $(DOMAIN) $(AGENT)
 
 uninstall-agent:
-	-launchctl bootout $(DOMAIN) $(AGENT)
+	@launchctl print $(DOMAIN)/local.retrocursor >/dev/null 2>&1 && launchctl bootout $(DOMAIN) $(AGENT) || true
 	rm -f $(AGENT)
 
 clean:
