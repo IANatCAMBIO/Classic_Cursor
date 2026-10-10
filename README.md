@@ -24,11 +24,17 @@ To bake in a different default cape:
 
 ## Run at login
 
-Easiest: **System Settings → General → Login Items → +**, then pick
-`/usr/local/bin/retrocursor`. (macOS may open a Terminal window for a bare
-executable.) For a silent run, use a LaunchAgent at
-`~/Library/LaunchAgents/local.retrocursor.plist` with `ProgramArguments`
-`/usr/local/bin/retrocursor` and `RunAtLoad` set to true.
+```sh
+sudo make install        # binary to /usr/local/bin
+make install-agent       # installs and loads a LaunchAgent (silent, runs at every login)
+make uninstall-agent     # removes it
+```
+
+`install-agent` writes `~/Library/LaunchAgents/local.retrocursor.plist` from
+`local.retrocursor.plist.in` and loads it with `launchctl`. It also appears in
+System Settings → General → Login Items & Extensions → Allow in the Background.
+Run it without `sudo` so the agent lands in your own home folder (if `/usr/local/bin`
+needs root, run `sudo make install` first, then `make install-agent`).
 
 ## How it works
 
