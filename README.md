@@ -3,9 +3,9 @@
 A tiny one-shot tool that replaces the macOS cursors with the ones in a
 [Mousecape](https://github.com/alexzielenski/Mousecape) `.cape` file, then exits.
 
-The cape (`cursors.cape` in this repo) is embedded in the binary at build time, so
+The cape (`macos_15_cursors.cape` in this repo) is embedded in the binary at build time, so
 the installed binary has no runtime file dependency. To use a different cape,
-replace `cursors.cape` and rebuild.
+replace `macos_15_cursors.cape` and rebuild.
 
 Cursors stay replaced until logout or reboot. There is no backup/restore; run it
 again at each login (see below).
@@ -42,6 +42,8 @@ cursors are also registered under every system cursor name containing
 "arrow"/"ibeam", since macOS 26 renamed them.
 
 ## Credits
+
+The cursor set (`macos_15_cursors.cape`) is the "MacOS 15" cape by Gino Xiscatti.
 
 The approach and the private API usage come from
 [Mousecape](https://github.com/alexzielenski/Mousecape) by Alex Zielenski and

@@ -1,13 +1,13 @@
 CC       ?= cc
 CFLAGS   ?= -Os -Wall -Wextra
-LDFLAGS  += -Wl,-sectcreate,__DATA,cape,cursors.cape -framework ApplicationServices -framework ImageIO -framework CoreFoundation
+LDFLAGS  += -Wl,-sectcreate,__DATA,cape,macos_15_cursors.cape -framework ApplicationServices -framework ImageIO -framework CoreFoundation
 PREFIX   ?= /usr/local
 AGENT    = $(HOME)/Library/LaunchAgents/local.retrocursor.plist
 DOMAIN   = gui/$(shell id -u)
 
 all: retrocursor
 
-retrocursor: retrocursor.c cursors.cape
+retrocursor: retrocursor.c macos_15_cursors.cape
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ retrocursor.c $(LDFLAGS)
 	strip $@
 

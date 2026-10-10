@@ -1,5 +1,5 @@
 /*
- * retrocursor — apply the cape embedded at build time (cursors.cape) to the
+ * retrocursor — apply the cape embedded at build time (macos_15_cursors.cape) to the
  * macOS cursors, once, and exit.
  *
  * Cursors stay replaced until logout/reboot; there is no backup or restore.
