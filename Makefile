@@ -15,7 +15,7 @@ run: retrocursor
 	./retrocursor
 
 install: retrocursor
-	install -d $(PREFIX)/bin
+	mkdir -p $(PREFIX)/bin
 	install -m 755 retrocursor $(PREFIX)/bin/retrocursor
 
 install-agent:
