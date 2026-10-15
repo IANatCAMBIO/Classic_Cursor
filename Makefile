@@ -2,6 +2,7 @@ CC       ?= cc
 CFLAGS   ?= -Os -Wall -Wextra
 LDFLAGS  += -Wl,-sectcreate,__DATA,cape,macos_15_cursors.cape -framework ApplicationServices -framework ImageIO -framework CoreFoundation
 PREFIX   ?= /usr/local
+SIGN_ID  ?= Apple Development
 AGENT    = $(HOME)/Library/LaunchAgents/local.classic_cursor.plist
 DOMAIN   = gui/$(shell id -u)
 
@@ -10,6 +11,7 @@ all: classic_cursor
 classic_cursor: classic_cursor.c macos_15_cursors.cape
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ classic_cursor.c $(LDFLAGS)
 	strip $@
+	codesign -s "$(SIGN_ID)" -f -o runtime --timestamp=none $@
 
 run: classic_cursor
 	./classic_cursor

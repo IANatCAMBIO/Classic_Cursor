@@ -12,10 +12,11 @@ again at each login (see below).
 
 ## Install
 
-Prerequisites: macOS with Xcode Command Line Tools (`xcode-select --install`).
+Prerequisites: macOS with Xcode Command Line Tools (`xcode-select --install`) and an
+Apple Development signing certificate in your login keychain (see BUILD.md, Signing).
 
 ```sh
-make              # build ./classic_cursor (~130 KB, cape included)
+make              # build and sign ./classic_cursor (cape included); run as your user
 make run          # build and apply the cape now
 sudo make install # copies to /usr/local/bin/classic_cursor (PREFIX=... to change)
 ```
