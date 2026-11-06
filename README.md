@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="glove_cursor.png" alt="Classic glove cursor" width="150">
+</p>
+
 # classic_cursor
 
 macOS 26 (Tahoe) and later replaced the system cursors with a new design.  
