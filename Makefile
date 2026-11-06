@@ -1,7 +1,7 @@
 CC       ?= cc
 CFLAGS   ?= -Os -Wall -Wextra
 LDFLAGS  += -Wl,-sectcreate,__DATA,cape,macos_15_cursors.cape -framework ApplicationServices -framework ImageIO -framework CoreFoundation
-PREFIX   ?= /usr/local
+PREFIX   ?= $(HOME)/.local
 SIGN_ID  ?= Apple Development
 AGENT    = $(HOME)/Library/LaunchAgents/local.classic_cursor.plist
 DOMAIN   = gui/$(shell id -u)

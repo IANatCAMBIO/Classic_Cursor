@@ -18,13 +18,13 @@ Apple Development signing certificate in your login keychain (see BUILD.md, Sign
 ```sh
 make              # build and sign ./classic_cursor (cape included); run as your user
 make run          # build and apply the cape now
-sudo make install # copies to /usr/local/bin/classic_cursor (PREFIX=... to change)
+make install      # copies to ~/.local/bin/classic_cursor (PREFIX=... to change)
 ```
 
 ## Run at login
 
 ```sh
-sudo make install        # binary to /usr/local/bin
+make install             # binary to ~/.local/bin (no sudo needed)
 make install-agent       # installs and loads a LaunchAgent (silent, runs at every login)
 make uninstall-agent     # removes it
 ```
@@ -32,8 +32,10 @@ make uninstall-agent     # removes it
 `install-agent` writes `~/Library/LaunchAgents/local.classic_cursor.plist` from
 `local.classic_cursor.plist.in` and loads it with `launchctl`. It also appears in
 System Settings → General → Login Items & Extensions → Allow in the Background.
-Run it without `sudo` so the agent lands in your own home folder (if `/usr/local/bin`
-needs root, run `sudo make install` first, then `make install-agent`).
+`~/.local/bin` is not on PATH by default on macOS; add it to your shell profile if you
+want to run `classic_cursor` by hand. The LaunchAgent uses the full path, so it works
+either way. If you install with a different `PREFIX`, pass the same `PREFIX` to
+`make install-agent`.
 
 ## How it works
 
